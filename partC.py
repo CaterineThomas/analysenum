@@ -8,6 +8,9 @@ def g(a, b):
 def h(x, y):
     return np.cos(x)*np.sin(y)
 
+
+
+
 def plot_cn_on(fig,  f_shortname, f_name, X, Y, Z):
     #l'argument n donne le nombre de courbes de niveau désirées
     ax = fig.add_subplot(1,2,2)
@@ -37,8 +40,10 @@ def plot_surface_on(fig, X, Y, Z, f_shortname):
     ax.set_ylabel('y')  
     return ax
 
-plot_3d(g(2, 2/7), "g", "g, avec a = 2 et b = 2/7", -5, 5, -5, 5, 100)
-plot_3d(h, "h", "h = cos(x)sin(y)", -1*np.pi, 2*np.pi, -1*np.pi, 2*np.pi, 100)
+#plot_3d(g(2, 2/7), "g", "g, avec a = 2 et b = 2/7", -5, 5, -5, 5, 100)
+#plot_3d(h, "h", "h = cos(x)sin(y)", -1*np.pi, 2*np.pi, -1*np.pi, 2*np.pi, 100)
+
+print(str(np.gradient(h, 0, 0)))
 
 
 
