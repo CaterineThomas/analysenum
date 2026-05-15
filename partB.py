@@ -11,7 +11,7 @@ import numpy as np
 
 
 #1
-def balayage_pas_constant (f, a, b, N):
+def min_pas_constant (f, a, b, N):
     d = (b-a)/N
     x=a
     min=x
@@ -25,7 +25,7 @@ def balayage_pas_constant (f, a, b, N):
         x+=d
     return min
 
-def balayage_aleatoire (f, a, b, N):
+def min_pas_aleatoire (f, a, b, N):
     valeurs = []
     for k in range(1, N):
         valeurs.append(random.random()*(b-a))
