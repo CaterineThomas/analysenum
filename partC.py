@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import partB as B
+#import partB as B
 
 def g(a, b):
     return lambda x, y: (x*x)/a + (y*y)/b
@@ -43,7 +43,18 @@ def plot_surface_on(fig, X, Y, Z, f_shortname):
 #plot_3d(g(2, 2/7), "g", "g, avec a = 2 et b = 2/7", -5, 5, -5, 5, 100)
 #plot_3d(h, "h", "h = cos(x)sin(y)", -1*np.pi, 2*np.pi, -1*np.pi, 2*np.pi, 100)
 
-print(str(np.gradient(h, 0, 0)))
+def gradpc(eps, MaxIter, u, x0, y0, f):
+    x, y = x0, y0
+    grad = np.gradient(f)
+    gradtemp=grad(x0, y0)
+    i=0
+    while (i<MaxIter and np.norm(gradtemp)<eps):
+        x += u*gradtemp[0]
+        y += u*gradtemp[1]
+        gradtemp = grad(x, y)
+        i += 1
+    return (x, y) 
+gradpc(0.01, 100, -0.1, 0,0, h)
 
 
 

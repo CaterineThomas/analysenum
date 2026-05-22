@@ -72,7 +72,7 @@ plt.grid()
 plt.legend()
 plt.show()
 
-plot_courbe_err(plt, min_pas_aleatoire, 2, 8000, 'balayage aléatoire')
+plot_courbe_err(plt, min_pas_constant, 2, 8000, 'balayage aléatoire')
 plt.ylabel("erreur relative du résultat (log)")
 plt.xlabel("nombre de valeurs calculées")
 plt.yscale('log')
