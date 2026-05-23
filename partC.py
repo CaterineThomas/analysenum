@@ -40,21 +40,37 @@ def plot_surface_on(fig, X, Y, Z, f_shortname):
     ax.set_ylabel('y')  
     return ax
 
+def plot_given_cn_on(axe, niveau, f, xmin, xmax, ymin, ymax, num_points):
+    x = np.linspace(x_min, x_max, num_points)
+    y = np.linspace(y_min, y_max, num_points)
+    X, Y = np.meshgrid(x, y)
+    ax.contour(X, Y,)
 #plot_3d(g(2, 2/7), "g", "g, avec a = 2 et b = 2/7", -5, 5, -5, 5, 100)
 #plot_3d(h, "h", "h = cos(x)sin(y)", -1*np.pi, 2*np.pi, -1*np.pi, 2*np.pi, 100)
 
-def gradpc(eps, MaxIter, u, x0, y0, f):
-    x, y = x0, y0
-    grad = np.gradient(f)
-    gradtemp=grad(x0, y0)
+def gradpc(eps, MaxIter, u, x0, y0,f, df1, df2, rayon):
+    Xn=[x0]
+    Yn=[y0]
+    gradtemp = [df1(x0,y0), df2(x0,y0)]
     i=0
-    while (i<MaxIter and np.norm(gradtemp)<eps):
-        x += u*gradtemp[0]
-        y += u*gradtemp[1]
-        gradtemp = grad(x, y)
+    while (i<MaxIter and np.sqrt(gradtemp[0]**2+gradtemp[1]**2)>eps):
+        Xn.append(Xn[i]+u*gradtemp[0])
+        Yn.append(Yn[i] + u*gradtemp[1])
         i += 1
-    return (x, y) 
-gradpc(0.01, 100, -0.1, 0,0, h)
+        gradtemp = [df1(Xn[i],Yn[i]), df2(Xn[i],Yn[i])]
+    plt.scatter(Xn, Yn)
+    """
+    x = np.linspace(x0-rayon, x0+rayon, int(1/eps))
+    y = np.linspace(y0-rayon, y0+rayon, int(1/eps))
+    X, Y = np.meshgrid(x, y)
+    Z = f(X,Y)
+    for k in range(0,i):
+        plt.contour(X, Y, Z, levels=[f(Xn[k], Yn[k])])
+    """
+    plt.show()
+    return (Xn[i], Yn[i])
+
+gradpc(0.01, 100, -0.1, 1,1, h, lambda x,y: -np.sin(x)*np.sin(y), lambda x,y:np.cos(x)*np.cos(y), 6 )
 
 
 
