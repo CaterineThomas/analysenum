@@ -66,7 +66,7 @@ plt.legend()
 plt.show()
 
 plt.plot(np.subtract(err_cst, err_al))
-plt.ylabel("Erreur du pas constant - pas aléatoire")
+plt.ylabel("Err pas constant - Err pas aléatoire")
 plt.xlabel("nombre de valeurs calculées")
 plt.grid()
 plt.legend()
