@@ -55,7 +55,7 @@ def plot_courbe_err (plot, bal, nmin, nmax, lab):
         err.append(abs(expec-bal(f_test, 0, 3, n))/expec)
     plot.plot(err, label=lab)
     return err
-    
+""""   
 err_cst = plot_courbe_err(plt, min_pas_constant, 2, 500, 'balayage à pas constant')
 err_al = plot_courbe_err(plt, min_pas_aleatoire, 2, 500, 'balayage aléatoire')
 plt.ylabel("erreur relative du résultat (log)")
@@ -65,9 +65,10 @@ plt.grid()
 plt.legend()
 plt.show()
 
-plt.plot(np.subtract(err_cst, err_al))
+plt.plot(range(50, len(err_cst)), np.subtract(err_cst[50:], err_al[50:]))
 plt.ylabel("Err pas constant - Err pas aléatoire")
 plt.xlabel("nombre de valeurs calculées")
+plt.xlim(left=50)
 plt.grid()
 plt.legend()
 plt.show()
@@ -80,23 +81,26 @@ plt.title("phénomène intéressant lorsque N devient très grand")
 plt.grid()
 plt.legend()
 plt.show()
-
+"""
 def max_test(N):
     max_f_test = min_pas_constant(lambda x : -f_test(x), 0, 3, N)
     print("Maximum de f d'après le balayage à pas constant avec "+str(N)+" intervalles :" + str(f_test(max_f_test)) + " en " + str(max_f_test))
 
 def gradient(df, a, b, u, eps):
+    n=0
     x=(b-a)/2
     d=u*df(x)
     while abs(d)>eps :
+        n+=1
         x=x+d
         d=u*df(x)
     x=x+d
-    return x
+    return [x, n]
 
 def df_test(x):
     return 3*x*x - 6*x + 2
 
-
-print("Minimum de f d'après le gradient 1D est atteint en " + str(gradient(df_test, 0, 3, -0.001, 0.0001)))
+[minbygrad, niter] = gradient(df_test, 0, 3, -0.3, 0.0001)
+errgrad = abs(minbygrad - (1+np.sqrt(3)/3))
+print("Minimum de f d'après le gradient 1D est atteint en " + str(minbygrad) + ", avec une erreur relative de " + str(errgrad) + " après "+ str(niter)+" itérations.")
 max_test(1000)
